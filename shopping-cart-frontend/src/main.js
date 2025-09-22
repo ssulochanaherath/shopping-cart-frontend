@@ -1,24 +1,29 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import { Navbar } from "./components/Navbar.js";
+import { HomePage } from "./pages/Home.js";
+import { LoginPage } from "./pages/Login.js";
+import { CheckoutPage } from "./pages/Checkout.js";
+import { CartPage } from "./components/Cart.js";
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+window.addEventListener("hashchange", render);
+window.addEventListener("load", render);
 
-setupCounter(document.querySelector('#counter'))
+async function render() {
+    document.getElementById("navbar").innerHTML = Navbar();
+
+    let page = window.location.hash || "#/";
+    let content = "";
+
+    if (page === "/") {
+        content = await HomePage();
+    } else if (page === "#/cart") {
+        content = CartPage();
+    } else if (page === "#/login") {
+        content = LoginPage();
+    } else if (page === "#/checkout") {
+        content = CheckoutPage();
+    }
+
+    document.getElementById("app").innerHTML = content;
+}
+
+window.render = render; // make render available globally
