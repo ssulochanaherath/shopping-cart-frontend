@@ -8,22 +8,29 @@ window.addEventListener("hashchange", render);
 window.addEventListener("load", render);
 
 async function render() {
-    document.getElementById("navbar").innerHTML = Navbar();
-
-    let page = window.location.hash || "#/";
+    let page = window.location.hash || "#/login";
     let content = "";
 
-    if (page === "/") {
+    if (page === "#/login") {
+        document.getElementById("navbar").innerHTML = "";
+        content = LoginPage();
+    } else if (page === "#/") {
+        document.getElementById("navbar").innerHTML = Navbar();
         content = await HomePage();
     } else if (page === "#/cart") {
+        document.getElementById("navbar").innerHTML = Navbar();
         content = CartPage();
-    } else if (page === "#/login") {
-        content = LoginPage();
     } else if (page === "#/checkout") {
+        document.getElementById("navbar").innerHTML = Navbar();
         content = CheckoutPage();
     }
 
     document.getElementById("app").innerHTML = content;
 }
 
-window.render = render; // make render available globally
+window.fakeLogin = function () {
+    localStorage.setItem("isLoggedIn", "true");
+    window.location.hash = "#/";
+};
+
+window.render = render;
