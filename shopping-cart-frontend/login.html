@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-body">
+<div class="login-container">
+    <h2 class="login-title">Welcome Back 👋</h2>
+    <p class="login-subtitle">Please log in to continue</p>
+
+    <div class="input-group">
+        <input type="email" id="email" placeholder="Email" required>
+    </div>
+    <div class="input-group">
+        <input type="password" id="password" placeholder="Password" required>
+    </div>
+    <button id="login-btn" class="btn primary-btn">Login</button>
+
+    <div class="divider">
+        <span>or</span>
+    </div>
+
+    <button id="google-login" class="btn google-btn">Continue with Google</button>
+    <button id="facebook-login" class="btn facebook-btn">Continue with Facebook</button>
+    <button id="passkey-login" class="btn passkey-btn">Login with Passkey</button>
+</div>
+
+<script src="js/auth.js"></script>
+</body>
+</html>
