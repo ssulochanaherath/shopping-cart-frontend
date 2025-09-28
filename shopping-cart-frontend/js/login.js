@@ -20,7 +20,7 @@ document.getElementById("login-btn").addEventListener("click", async () => {
 
         if (res.ok) {
             alert("Login successful!");
-            // save JWT token if you want
+            localStorage.setItem("userEmail", data.user.email);
             localStorage.setItem("token", data.token);
             window.location.href = "index.html"; // redirect to home
         } else {

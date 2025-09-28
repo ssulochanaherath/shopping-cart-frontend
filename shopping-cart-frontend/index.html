@@ -20,6 +20,11 @@
     <a href="login.html" title="Sign Up">
       <i class="fas fa-user-plus"></i>
     </a>
+
+    <!-- Admin Add Product Button -->
+    <a href="add-product.html" id="add-product-btn" title="Add Product" style="display:none;">
+      <i class="fas fa-plus-circle"></i> Add Product
+    </a>
   </nav>
 </header>
 
@@ -32,5 +37,13 @@
 </main>
 
 <script src="js/main.js"></script>
+<script>
+  const currentUserEmail = localStorage.getItem("userEmail");
+  const adminEmail = "ssulochanaherath@gmail.com";
+
+  if (currentUserEmail === adminEmail) {
+    document.getElementById("add-product-btn").style.display = "inline-block";
+  }
+</script>
 </body>
 </html>

@@ -427,3 +427,123 @@ header nav a:hover {
         padding: 30px 20px;
     }
 }
+
+/*add-product*/
+/* Global */
+body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, sans-serif;
+    background: #f4f6f9;
+    color: #333;
+}
+
+/* Header */
+header {
+    background: #2c3e50;
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+nav a {
+    margin-left: 1rem;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.2s;
+}
+nav a:hover {
+    color: #1abc9c;
+}
+
+/* Container */
+.form-card {
+    background: #fff;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.form-card h2 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #2c3e50;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+.input-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border 0.2s;
+}
+.input-group input:focus {
+    border-color: #1abc9c;
+    outline: none;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 0.9rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.primary-btn {
+    background: #1abc9c;
+    color: #fff;
+}
+.primary-btn:hover {
+    background: #16a085;
+}
+
+/* Table */
+h2.section-title {
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+table {
+    width: 90%;
+    margin: 0 auto 3rem;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+table th, table td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+table th {
+    background: #2c3e50;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+table tr:last-child td {
+    border-bottom: none;
+}
+table img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome for icons -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+</head>
+<body>
+
+<!-- Header Start -->
+<header>
+    <h1>Add Products</h1>
+    <nav>
+        <a href="cart.html" title="Cart">
+            <i class="fas fa-shopping-cart"></i>
+        </a>
+        <a href="login.html" title="Sign Up">
+            <i class="fas fa-user-plus"></i>
+        </a>
+        <a href="add-product.html" id="add-product-btn-nav" title="Add Product" style="display:none;">
+            <i class="fas fa-plus-circle"></i>
+        </a>
+    </nav>
+</header>
+<!-- Header End -->
+
+<!-- Form Card -->
+<div class="form-card">
+    <h2>Add New Product</h2>
+
+    <div class="input-group">
+        <input type="text" id="name" placeholder="Product Name" required>
+    </div>
+    <div class="input-group">
+        <input type="number" id="price" placeholder="Price" required>
+    </div>
+    <div class="input-group">
+        <input type="text" id="category" placeholder="Category" required>
+    </div>
+    <div class="input-group">
+        <input type="file" id="image" accept="image/*">
+    </div>
+
+    <button id="add-product-btn" class="btn primary-btn">Add Product</button>
+</div>
+
+<!-- Saved Products -->
+<h2 class="section-title">Saved Products</h2>
+<table id="products-table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Image</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Products will be inserted here -->
+    </tbody>
+</table>
+
+<script src="js/add-product.js"></script>
+</body>
+</html>
