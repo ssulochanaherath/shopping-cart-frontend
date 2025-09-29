@@ -1,10 +1,8 @@
-// Fetch products from backend and build categories and products arrays dynamically
 async function loadProducts() {
     try {
         const res = await fetch("http://localhost:5000/api/products");
         const productsFromDB = await res.json();
 
-        // Build unique categories array
         const categoriesMap = {};
         productsFromDB.forEach(p => {
             if (p.category && !categoriesMap[p.category]) {
@@ -17,7 +15,6 @@ async function loadProducts() {
             name: catName
         }));
 
-        // Build products array in same format as your sample
         const products = productsFromDB.map(p => ({
             id: p.id,
             name: p.name,
@@ -27,14 +24,11 @@ async function loadProducts() {
             imageUrl: p.image || "placeholder.jpg"
         }));
 
-        // Render categories
         const categoriesDiv = document.getElementById('categories');
         categoriesDiv.innerHTML = categories.map(cat => `<button class="category-btn" onclick="filterProducts(${cat.id})">${cat.name}</button>`).join('');
 
-        // Render products
         renderProducts(products);
 
-        // Store products globally for filtering
         window.allProducts = products;
 
     } catch (err) {
@@ -62,7 +56,6 @@ function filterProducts(categoryId) {
     renderProducts(filtered);
 }
 
-// Add to cart (frontend only)
 async function addToCart(productId) {
     const userId = localStorage.getItem("userId") || 1; // demo user
     await fetch(`http://localhost:5000/api/cart/${userId}/add`, {
@@ -73,5 +66,4 @@ async function addToCart(productId) {
     alert("Product added to cart!");
 }
 
-// Load products on page load
 loadProducts();

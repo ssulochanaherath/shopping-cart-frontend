@@ -12,13 +12,30 @@ document.getElementById("signup-btn").addEventListener("click", async () => {
         const data = await res.json();
 
         if (res.ok) {
-            alert("Account created successfully!");
-            window.location.href = "login.html";
+            Swal.fire({
+                icon: 'success',
+                title: 'Account Created!',
+                text: 'Your account was created successfully.',
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 1500);
         } else {
-            alert(data.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Signup Failed',
+                text: data.message || 'Something went wrong!',
+            });
         }
     } catch (err) {
         console.error(err);
-        alert("Error connecting to server");
+        Swal.fire({
+            icon: 'error',
+            title: 'Server Error',
+            text: 'Error connecting to server',
+        });
     }
 });

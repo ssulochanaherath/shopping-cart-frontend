@@ -34,7 +34,16 @@ async function loadProducts() {
         document.querySelectorAll(".delete-btn").forEach(btn => {
             btn.addEventListener("click", async (e) => {
                 const id = e.target.getAttribute("data-id");
-                if (confirm("Are you sure you want to delete this product?")) {
+                const result = await Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you really want to delete this product?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                });
+                if (result.isConfirmed) {
                     await deleteProduct(id);
                 }
             });
@@ -49,6 +58,11 @@ async function loadProducts() {
 
     } catch (err) {
         console.error("Error loading products:", err);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to load products'
+        });
     }
 }
 
@@ -60,7 +74,11 @@ async function addProductHandler() {
     const imageFile = document.getElementById("image").files[0];
 
     if (!name || !price || !category) {
-        alert("Please fill all required fields!");
+        Swal.fire({
+            icon: 'warning',
+            title: 'Incomplete Data',
+            text: 'Please fill all required fields!'
+        });
         return;
     }
 
@@ -78,15 +96,29 @@ async function addProductHandler() {
 
         const data = await res.json();
         if (res.ok) {
-            alert("Product added successfully!");
+            Swal.fire({
+                icon: 'success',
+                title: 'Added!',
+                text: 'Product added successfully!',
+                timer: 1500,
+                showConfirmButton: false
+            });
             loadProducts();
             resetForm();
         } else {
-            alert(data.message || "Failed to add product");
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed',
+                text: data.message || "Failed to add product"
+            });
         }
     } catch (err) {
         console.error("Error adding product:", err);
-        alert("Server error");
+        Swal.fire({
+            icon: 'error',
+            title: 'Server Error',
+            text: 'Could not add product'
+        });
     }
 }
 
@@ -97,13 +129,28 @@ async function deleteProduct(id) {
             method: "DELETE"
         });
         if (res.ok) {
-            alert("Product deleted!");
+            Swal.fire({
+                icon: 'success',
+                title: 'Deleted!',
+                text: 'Product deleted successfully',
+                timer: 1200,
+                showConfirmButton: false
+            });
             loadProducts();
         } else {
-            alert("Failed to delete product");
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed',
+                text: 'Failed to delete product'
+            });
         }
     } catch (err) {
         console.error("Error deleting product:", err);
+        Swal.fire({
+            icon: 'error',
+            title: 'Server Error',
+            text: 'Could not delete product'
+        });
     }
 }
 
@@ -114,7 +161,11 @@ async function editProduct(id) {
         const product = await res.json();
 
         if (!res.ok) {
-            alert("Product not found!");
+            Swal.fire({
+                icon: 'error',
+                title: 'Not Found',
+                text: 'Product not found!'
+            });
             return;
         }
 
@@ -123,11 +174,7 @@ async function editProduct(id) {
         document.getElementById("category").value = product.category;
 
         const preview = document.getElementById("image-preview");
-        if (product.image) {
-            preview.innerHTML = `<img src="${product.image}" width="80" style="margin-top:5px;">`;
-        } else {
-            preview.innerHTML = "";
-        }
+        preview.innerHTML = product.image ? `<img src="${product.image}" width="80" style="margin-top:5px;">` : "";
 
         const btn = document.getElementById("add-product-btn");
         btn.textContent = "Update Product";
@@ -154,24 +201,43 @@ async function editProduct(id) {
                 });
 
                 if (res.ok) {
-                    alert("Product updated!");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Updated!',
+                        text: 'Product updated successfully',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
                     loadProducts();
                     resetForm();
 
-                    // Reset button back to Add mode
                     newBtn.textContent = "Add Product";
                     const resetBtn = newBtn.cloneNode(true);
                     newBtn.parentNode.replaceChild(resetBtn, newBtn);
                     resetBtn.addEventListener("click", addProductHandler);
                 } else {
-                    alert("Failed to update product");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed',
+                        text: 'Failed to update product'
+                    });
                 }
             } catch (err) {
                 console.error("Error updating product:", err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Server Error',
+                    text: 'Could not update product'
+                });
             }
         });
     } catch (err) {
         console.error("Error editing product:", err);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Could not fetch product'
+        });
     }
 }
 
