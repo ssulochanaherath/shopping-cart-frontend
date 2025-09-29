@@ -465,7 +465,7 @@ nav a:hover {
 /* Container */
 .form-card {
     background: #fff;
-    max-width: 600px;
+    max-width: 1000px;
     margin: 2rem auto;
     padding: 2rem;
     border-radius: 12px;
@@ -519,7 +519,7 @@ h2.section-title {
     color: #2c3e50;
 }
 table {
-    width: 90%;
+    width: 100%;
     margin: 0 auto 3rem;
     border-collapse: collapse;
     background: #fff;
@@ -527,6 +527,17 @@ table {
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
+#products-table {
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
 table th, table td {
     padding: 1rem;
     text-align: center;

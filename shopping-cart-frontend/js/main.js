@@ -63,8 +63,14 @@ function filterProducts(categoryId) {
 }
 
 // Add to cart (frontend only)
-function addToCart(productId) {
-    alert('Added product ID ' + productId + ' to cart (frontend only)');
+async function addToCart(productId) {
+    const userId = localStorage.getItem("userId") || 1; // demo user
+    await fetch(`http://localhost:5000/api/cart/${userId}/add`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId })
+    });
+    alert("Product added to cart!");
 }
 
 // Load products on page load
