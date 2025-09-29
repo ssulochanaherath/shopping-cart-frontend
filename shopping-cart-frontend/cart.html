@@ -14,15 +14,31 @@
 <header>
     <h1>Shopping Cart</h1>
     <nav>
-        <a href="index.html">Products</a>
-        <a href="signup.html" title="Sign Up">
-            <i class="fas fa-user-plus"></i>
+        <a href="index.html" title="Home">
+            <i class="fas fa-home"></i>
+        </a>
+        <a href="login.html" title="Sign Out">
+            <i class="fas fa-right-from-bracket"></i>
         </a>
     </nav>
 </header>
 
 <main>
-    <div id="cart-items"></div>
+    <table id="cart-table">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Cart items will load here dynamically -->
+        </tbody>
+    </table>
+
     <div id="cart-total"></div>
 </main>
 

@@ -1,31 +1,50 @@
-// Sample categories and products
-const categories = [
-    { id: 1, name: 'Vegetables' },
-    { id: 2, name: 'Fruits' },
-    { id: 3, name: 'Cakes' },
-    { id: 4, name: 'Biscuits' }
-];
+async function loadCart() {
+    const userId = localStorage.getItem("userId") || 1; // demo user
+    const res = await fetch(`http://localhost:5000/api/cart/${userId}`);
+    const items = await res.json();
 
-const products = [
-    { id: 1, name: 'Tomato', price: 2.5, category: 1, description: 'Fresh tomato', imageUrl: 'images/vegetables/tomato.jpg' },
-    { id: 2, name: 'Apple', price: 3.0, category: 2, description: 'Red apple', imageUrl: 'images/fruits/apple.jpg' },
-    { id: 3, name: 'Chocolate Cake', price: 10, category: 3, description: 'Delicious cake', imageUrl: 'images/cakes/chocolate.jpg' },
-];
+    const tbody = document.querySelector("#cart-table tbody");
+    tbody.innerHTML = "";
 
-const categoriesDiv = document.getElementById('categories');
-categoriesDiv.innerHTML = categories.map(cat => `<button class="category-btn">${cat.name}</button>`).join('');
+    let total = 0;
+    items.forEach(item => {
+        const subtotal = item.Product.price * item.quantity;
+        total += subtotal;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+      <td>${item.Product.name}</td>
+      <td>$${item.Product.price.toFixed(2)}</td>
+      <td>
+        <input type="number" min="1" value="${item.quantity}" 
+          onchange="updateQuantity(${item.ProductId}, this.value)">
+      </td>
+      <td>$${subtotal.toFixed(2)}</td>
+      <td>
+        <button onclick="removeFromCart(${item.ProductId})">❌</button>
+      </td>
+    `;
+        tbody.appendChild(tr);
+    });
 
-const productsDiv = document.getElementById('products');
-productsDiv.innerHTML = products.map(p => `
-  <div class="product-card">
-    <img src="${p.imageUrl}" alt="${p.name}">
-    <h3>${p.name}</h3>
-    <p>${p.description}</p>
-    <p>$${p.price}</p>
-    <button onclick="addToCart(${p.id})">Add to Cart</button>
-  </div>
-`).join('');
-
-function addToCart(productId) {
-    alert('Added product ID ' + productId + ' to cart (frontend only)');
+    document.getElementById("cart-total").textContent = "Total: $" + total.toFixed(2);
 }
+
+async function updateQuantity(productId, quantity) {
+    const userId = localStorage.getItem("userId") || 1;
+    await fetch(`http://localhost:5000/api/cart/${userId}/update/${productId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ quantity: parseInt(quantity) })
+    });
+    loadCart();
+}
+
+async function removeFromCart(productId) {
+    const userId = localStorage.getItem("userId") || 1;
+    await fetch(`http://localhost:5000/api/cart/${userId}/remove/${productId}`, {
+        method: "DELETE"
+    });
+    loadCart();
+}
+
+loadCart();
