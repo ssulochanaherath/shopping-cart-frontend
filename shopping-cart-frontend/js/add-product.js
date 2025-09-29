@@ -7,7 +7,7 @@ function toBase64(file) {
     });
 }
 
-// Load all products
+// ========== Load all products ==========
 async function loadProducts() {
     try {
         const res = await fetch("http://localhost:5000/api/products");
@@ -31,7 +31,6 @@ async function loadProducts() {
             tbody.appendChild(tr);
         });
 
-        // Attach delete handlers
         document.querySelectorAll(".delete-btn").forEach(btn => {
             btn.addEventListener("click", async (e) => {
                 const id = e.target.getAttribute("data-id");
@@ -41,7 +40,6 @@ async function loadProducts() {
             });
         });
 
-        // Attach edit handlers
         document.querySelectorAll(".edit-btn").forEach(btn => {
             btn.addEventListener("click", async (e) => {
                 const id = e.target.getAttribute("data-id");
@@ -54,8 +52,8 @@ async function loadProducts() {
     }
 }
 
-// Add new product
-document.getElementById("add-product-btn").addEventListener("click", async () => {
+// ========== Add product ==========
+async function addProductHandler() {
     const name = document.getElementById("name").value.trim();
     const price = parseFloat(document.getElementById("price").value);
     const category = document.getElementById("category").value.trim();
@@ -82,10 +80,7 @@ document.getElementById("add-product-btn").addEventListener("click", async () =>
         if (res.ok) {
             alert("Product added successfully!");
             loadProducts();
-            document.getElementById("name").value = "";
-            document.getElementById("price").value = "";
-            document.getElementById("category").value = "";
-            document.getElementById("image").value = "";
+            resetForm();
         } else {
             alert(data.message || "Failed to add product");
         }
@@ -93,9 +88,9 @@ document.getElementById("add-product-btn").addEventListener("click", async () =>
         console.error("Error adding product:", err);
         alert("Server error");
     }
-});
+}
 
-// Delete product
+// ========== Delete product ==========
 async function deleteProduct(id) {
     try {
         const res = await fetch(`http://localhost:5000/api/products/${id}`, {
@@ -112,10 +107,9 @@ async function deleteProduct(id) {
     }
 }
 
-// Edit product
+// ========== Edit / Update product ==========
 async function editProduct(id) {
     try {
-        // Get product details from backend
         const res = await fetch(`http://localhost:5000/api/products/${id}`);
         const product = await res.json();
 
@@ -124,21 +118,30 @@ async function editProduct(id) {
             return;
         }
 
-        // Fill form with existing data
         document.getElementById("name").value = product.name;
         document.getElementById("price").value = product.price;
         document.getElementById("category").value = product.category;
 
-        // Change Add button behavior to Update
+        const preview = document.getElementById("image-preview");
+        if (product.image) {
+            preview.innerHTML = `<img src="${product.image}" width="80" style="margin-top:5px;">`;
+        } else {
+            preview.innerHTML = "";
+        }
+
         const btn = document.getElementById("add-product-btn");
         btn.textContent = "Update Product";
-        btn.onclick = async () => {
+
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+
+        newBtn.addEventListener("click", async () => {
             const name = document.getElementById("name").value.trim();
             const price = parseFloat(document.getElementById("price").value);
             const category = document.getElementById("category").value.trim();
             const imageFile = document.getElementById("image").files[0];
 
-            let imageData = product.image;
+            let imageData = product.image; // keep old if not changed
             if (imageFile) {
                 imageData = await toBase64(imageFile);
             }
@@ -153,22 +156,33 @@ async function editProduct(id) {
                 if (res.ok) {
                     alert("Product updated!");
                     loadProducts();
-                    btn.textContent = "Add Product";
-                    btn.onclick = null;
-                    document.getElementById("name").value = "";
-                    document.getElementById("price").value = "";
-                    document.getElementById("category").value = "";
-                    document.getElementById("image").value = "";
+                    resetForm();
+
+                    // Reset button back to Add mode
+                    newBtn.textContent = "Add Product";
+                    const resetBtn = newBtn.cloneNode(true);
+                    newBtn.parentNode.replaceChild(resetBtn, newBtn);
+                    resetBtn.addEventListener("click", addProductHandler);
                 } else {
                     alert("Failed to update product");
                 }
             } catch (err) {
                 console.error("Error updating product:", err);
             }
-        };
+        });
     } catch (err) {
         console.error("Error editing product:", err);
     }
 }
+
+function resetForm() {
+    document.getElementById("name").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("category").value = "";
+    document.getElementById("image").value = "";
+    document.getElementById("image-preview").innerHTML = "";
+}
+
+document.getElementById("add-product-btn").addEventListener("click", addProductHandler);
 
 loadProducts();

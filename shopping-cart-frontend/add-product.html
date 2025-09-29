@@ -43,8 +43,12 @@
     <div class="input-group">
         <input type="text" id="category" placeholder="Category" required>
     </div>
-    <div class="input-group">
-        <input type="file" id="image" accept="image/*">
+    <div class="file-upload">
+        <label for="image" class="upload-label">
+            <span>📷 Upload Image</span>
+        </label>
+        <input type="file" id="image" hidden>
+        <div id="image-preview" class="image-preview">No image selected</div>
     </div>
 
     <button id="add-product-btn" class="btn primary-btn">Add Product</button>
