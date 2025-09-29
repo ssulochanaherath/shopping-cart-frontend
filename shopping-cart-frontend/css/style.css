@@ -183,7 +183,7 @@ body {
 
 /* Header styling */
 header {
-    background-color: #4e54c8; /* gradient for modern look */
+    background-color: #4e54c8;
     background-image: linear-gradient(to right, #4e54c8, #8f94fb);
     color: white;
     padding: 20px 40px;
@@ -222,8 +222,8 @@ main {
 /* Section titles */
 main h2 {
     margin-bottom: 20px;
-    color: #4e54c8;
-    font-size: 1.8rem;
+    color: #2C3E50;
+    font-size: 1.2rem;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
